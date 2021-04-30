@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   TextInput,
-  Button,
   TouchableOpacity,
   StyleSheet,
   View,
@@ -13,54 +12,59 @@ import axios from 'axios';
 import userConstants from '../redux/types';
 import {app_url} from '../CONSTANTS';
 // import {useDispatch} from 'react-redux';
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   // const dispatch = useDispatch();
-  const [state, setState] = React.useState({username: '', password: ''});
-
-  const login_user = (uname, pass) => {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const login_user = () => {
     // dispatch({type: userConstants.LOGIN_REQUEST});
-    const config = {
-      method: 'post',
-      url: app_url + '/login',
-      data: {
-        username: uname,
-        password: pass,
-      },
-    };
-    axios(config)
-      .then(res => Alert.alert(res))
-      .catch(err => Alert.alert(err.response));
+    // const config = {
+    //   method: 'post',
+    //   url: app_url + '/login',
+    //   data: {
+    //     username: uname,
+    //     password: pass,
+    //   },
+    // };
+    // axios(config)
+    //   .then(res => Alert.alert(res))
+    //   .catch(err => Alert.alert(err.response));
+    console.log('helloooooooooooooo');
   };
   return (
     <View style={styles.container}>
       <Text style={styles.screenLabel}>
         Sign in or <Text style={{color: 'darkblue'}}>create account</Text>
       </Text>
-      <View>
-        <TextInput
-          style={styles.field}
-          placeholder="email or username"
-          value={state.username}
-          placeholderTextColor="#003f5c"
-          onChangeText={text => setState({username: text})}
-        />
-      </View>
+
+      <TextInput
+        style={styles.field}
+        placeholder="email or username"
+        value={username}
+        placeholderTextColor="#003f5c"
+        onChangeText={text => setUsername(text)}
+      />
+
       <View>
         <TextInput
           style={styles.field}
           placeholder="Password"
-          value={state.password}
-          onChangeText={text => setState({password: text})}
+          value={password}
+          onChangeText={text => setPassword(text)}
           placeholderTextColor="#003f5c"
           secureTextEntry
+          placeholderStyle={{color: 'green', marginLeft: 20}}
         />
       </View>
       <View style={styles.resetContainer}>
-        <Text style={styles.resetPassword}> Forgot password?</Text>
+        <Text
+          style={styles.resetPassword}
+          onPress={() => navigation.navigate('ResetPassword')}>
+          {' '}
+          Forgot password?
+        </Text>
       </View>
-      <TouchableOpacity
-        onPress={console.log('hello there')}
-        style={styles.loginBtn}>
+      <TouchableOpacity onPress={login_user()} style={styles.loginBtn}>
         <Text style={styles.loginBtnText}>Login</Text>
       </TouchableOpacity>
     </View>
@@ -71,10 +75,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#eaeaea',
-    justifyContent: 'center',
+    marginTop: '50%',
   },
   field: {
+    height: 60,
     marginTop: 12,
     paddingVertical: 8,
     borderBottomColor: '#000000',
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
 
   loginBtn: {
     marginTop: 25,
-    elevation: 8,
+
     backgroundColor: '#009688',
     borderRadius: 10,
     paddingVertical: 10,

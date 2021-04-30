@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}) => {
   const [state, setstate] = useState();
 
   return (
@@ -27,12 +27,12 @@ const WelcomeScreen = () => {
       </View>
       <View style={{marginBottom: 40}}>
         <TouchableOpacity
-          onPress={console.log('hello there')}
+          onPress={() => navigation.navigate('SignUp')}
           style={styles.signupButtonContainer}>
           <Text style={styles.signupButtonText}>Create account</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={console.log('hello there')}
+          onPress={() => navigation.navigate('SignIn')}
           style={styles.loginBtn}>
           <Text style={styles.loginBtnText}>Login</Text>
         </TouchableOpacity>
