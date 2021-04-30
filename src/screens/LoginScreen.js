@@ -1,14 +1,22 @@
 import * as React from 'react';
-import {TextInput, Button, StyleSheet, View, Alert} from 'react-native';
+import {
+  TextInput,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+} from 'react-native';
 // import {login_user} from '../redux/actions/Login';
 import axios from 'axios';
 import userConstants from '../redux/types';
 import {app_url} from '../CONSTANTS';
-import {useDispatch} from 'react-redux';
+// import {useDispatch} from 'react-redux';
 const LoginScreen = () => {
-  const dispatch = useDispatch();
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  // const dispatch = useDispatch();
+  const [state, setState] = React.useState({username: '', password: ''});
+
   const login_user = (uname, pass) => {
     // dispatch({type: userConstants.LOGIN_REQUEST});
     const config = {
@@ -25,24 +33,36 @@ const LoginScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.btn}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.btn}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button
-        title="Sign in"
-        style={styles.login}
-        onPress={() => login_user(username, password)}
-      />
+      <Text style={styles.screenLabel}>
+        Sign in or <Text style={{color: 'darkblue'}}>create account</Text>
+      </Text>
+      <View>
+        <TextInput
+          style={styles.field}
+          placeholder="email or username"
+          value={state.username}
+          placeholderTextColor="#003f5c"
+          onChangeText={text => setState({username: text})}
+        />
+      </View>
+      <View>
+        <TextInput
+          style={styles.field}
+          placeholder="Password"
+          value={state.password}
+          onChangeText={text => setState({password: text})}
+          placeholderTextColor="#003f5c"
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.resetContainer}>
+        <Text style={styles.resetPassword}> Forgot password?</Text>
+      </View>
+      <TouchableOpacity
+        onPress={console.log('hello there')}
+        style={styles.loginBtn}>
+        <Text style={styles.loginBtnText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -54,11 +74,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#eaeaea',
     justifyContent: 'center',
   },
-  btn: {
-    marginTop: 16,
+  field: {
+    marginTop: 12,
     paddingVertical: 8,
-    borderWidth: 2,
-    borderColor: '#20232a',
+    borderBottomColor: '#000000',
+    borderBottomWidth: 1,
     borderRadius: 6,
     backgroundColor: '#61dafb',
     color: '#20232a',
@@ -72,5 +92,33 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingTop: 30,
+  },
+
+  loginBtn: {
+    marginTop: 25,
+    elevation: 8,
+    backgroundColor: '#009688',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  loginBtnText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
+  resetPassword: {
+    color: 'darkblue',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  resetContainer: {
+    marginTop: 20,
+  },
+  screenLabel: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

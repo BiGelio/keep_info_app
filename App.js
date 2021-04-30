@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 // import {Provider, useSelector} from 'react-redux';
 // import HomeScreen from './src/screens/HomeScreen';
 // import ProfileScreen from './src/screens/ProfileScreen';
-// import LoginScreen from './src/screens/LoginScreen';
+import LoginScreen from './src/screens/LoginScreen';
 // import SettingsScreen from './src/screens/SettingsScreen';
 import {createStore} from 'redux';
 import rootReducer from './src/redux/reducers/login';
@@ -16,7 +16,7 @@ const App = () => {
   // const state = useSelector(state => state.logedIn);
   const [state, setState] = useState(true);
   return (
-    <WelcomeScreen />
+    <LoginScreen />
 
     // <Provider store={store}>
     //   <NavigationContainer>
